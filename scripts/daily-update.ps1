@@ -35,9 +35,9 @@ try {
         New-Item -ItemType Directory -Path $logDir -Force | Out-Null
         $logPath = Join-Path $logDir ($now.ToString('yyyy-MM') + '.md')
         if (-not (Test-Path -LiteralPath $logPath)) {
-            "# Daily pulses — $($now.ToString('yyyy-MM'))`n" | Set-Content -LiteralPath $logPath -Encoding utf8
+            "# Daily pulses - $($now.ToString('yyyy-MM'))`n" | Set-Content -LiteralPath $logPath -Encoding utf8
         }
-        "- $day — daily repository sync completed at $($now.ToString('HH:mm')) Asia/Almaty." | Add-Content -LiteralPath $logPath -Encoding utf8
+        "- $day - daily repository sync completed at $($now.ToString('HH:mm')) Asia/Almaty." | Add-Content -LiteralPath $logPath -Encoding utf8
         $state.phase = 1
         $state | ConvertTo-Json | Set-Content -LiteralPath $statePath -Encoding utf8
         git add -- $logPath $statePath
@@ -65,4 +65,3 @@ finally {
     if ($lock) { $lock.Dispose() }
     Remove-Item -LiteralPath $lockPath -Force -ErrorAction SilentlyContinue
 }
-
