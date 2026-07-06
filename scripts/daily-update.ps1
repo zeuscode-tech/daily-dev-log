@@ -7,7 +7,8 @@ $ErrorActionPreference = 'Stop'
 $RepoPath = (Resolve-Path -LiteralPath $RepoPath).Path
 $lockPath = Join-Path $RepoPath '.daily-update.lock'
 $statePath = Join-Path $RepoPath '.daily-state.json'
-$almatyZone = [TimeZoneInfo]::FindSystemTimeZoneById('Central Asia Standard Time')
+$zoneId = if ($IsLinux -or $IsMacOS) { 'Asia/Almaty' } else { 'Central Asia Standard Time' }
+$almatyZone = [TimeZoneInfo]::FindSystemTimeZoneById($zoneId)
 $now = [TimeZoneInfo]::ConvertTimeFromUtc([DateTime]::UtcNow, $almatyZone)
 $day = $now.ToString('yyyy-MM-dd')
 

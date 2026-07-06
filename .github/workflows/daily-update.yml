@@ -1,0 +1,29 @@
+name: Daily development log
+
+on:
+  schedule:
+    # 14:15 UTC = 19:15 Asia/Almaty (UTC+5)
+    - cron: "15 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-development-log
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Create and push two daily updates
+        shell: pwsh
+        run: ./scripts/daily-update.ps1 -RepoPath $PWD
